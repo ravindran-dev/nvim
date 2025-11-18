@@ -32,7 +32,14 @@ require("lazy").setup({
       vim.cmd("colorscheme catppuccin")
     end
   },
-
+  {
+    "edluffy/hologram.nvim",
+    config = function()
+      require("hologram").setup{
+        auto_display = true
+      }
+    end
+  },
   -- UI
   { "nvim-lualine/lualine.nvim", opts = {} },
   { "kyazdani42/nvim-web-devicons", lazy = true },
