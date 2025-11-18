@@ -33,11 +33,18 @@ require("lazy").setup({
     end
   },
   {
-    "edluffy/hologram.nvim",
+    "3rd/image.nvim",
+    lazy = false,
     config = function()
-      require("hologram").setup{
-        auto_display = true
-      }
+      require("image").setup({
+        backend = "kitty",  -- REQUIRED for real images
+        integrations = {},  -- no treesitter/git integration here
+        max_width = 60,
+        max_height = 40,
+        max_depth = nil,
+        window_overlap_clear_enabled = true,
+        editor_only_render_when_focused = true,
+      })
     end
   },
   -- UI
