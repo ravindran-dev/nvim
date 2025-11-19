@@ -1,7 +1,7 @@
 local o = vim.opt
 
 
--- basics
+
 o.mouse = "a"
 o.clipboard = "unnamedplus"
 o.number = true
@@ -24,7 +24,7 @@ o.swapfile = false
 o.undofile = true
 
 
--- UI
+
 o.signcolumn = "yes"
 o.cursorline = true
 
@@ -38,9 +38,9 @@ o.scrolloff = 8
 o.sidescrolloff = 8
 
 
--- performance
+
 o.updatetime = 250
 
 
--- filetypes
+
 vim.g.mapleader = " "

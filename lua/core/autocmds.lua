@@ -2,7 +2,7 @@
 local api = vim.api
 
 
--- Remove trailing whitespace on save
+
 api.nvim_create_autocmd('BufWritePre', {
 pattern = '*',
 callback = function()
@@ -13,7 +13,7 @@ end,
 })
 
 
--- Highlight on yank
+
 api.nvim_create_autocmd('TextYankPost', {
 callback = function() vim.highlight.on_yank({ timeout = 200 }) end,
 })

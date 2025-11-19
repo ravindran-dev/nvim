@@ -78,9 +78,7 @@ local function animate_header(buf, pad_top)
   step()
 end
 
----------------------------------------------------------------------
--- RENDER MENU (Upgraded formatting, consistent alignment)
----------------------------------------------------------------------
+
 local function render_menu(buf, pad_top)
   local start = pad_top + #header + 4
   local row = start
@@ -106,9 +104,7 @@ local function render_menu(buf, pad_top)
   return start
 end
 
----------------------------------------------------------------------
--- MAIN DASHBOARD ENTRY
----------------------------------------------------------------------
+
 function M.open()
   vim.cmd("enew")
   local buf = api.nvim_get_current_buf()
@@ -125,21 +121,21 @@ function M.open()
   vim.wo.wrap = false
   vim.wo.scrolloff = 99999   -- NO SCROLLING
 
-  -- Disable insert mode
+  
   for _, key in ipairs({ "i", "a", "o", "O", "I", "A" }) do
     vim.keymap.set("n", key, "<nop>", { buffer = buf })
   end
 
-  -- Initial screen
+  
   local lines, pad_top = make_empty()
   vim.bo[buf].modifiable = true
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.bo[buf].modifiable = false
 
-  -- Animate header
+  
   animate_header(buf, pad_top)
 
-  -- Draw menu
+  
   vim.defer_fn(function()
     local start_row = render_menu(buf, pad_top)
 
@@ -154,7 +150,7 @@ function M.open()
 
     highlight(1)
 
-    -- Navigation keys
+    
     local opts = { noremap = true, silent = true, buffer = buf }
 
     vim.keymap.set("n", "j", function()
@@ -171,7 +167,7 @@ function M.open()
       vim.cmd(menu[current].cmd)
     end, opts)
 
-    -- Direct key triggers
+    
     for _, m in ipairs(menu) do
       vim.keymap.set("n", m.key, function()
         vim.cmd(m.cmd)
