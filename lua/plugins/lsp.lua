@@ -1,44 +1,76 @@
-local mason = require("mason")
-local mason_lsp = require("mason-lspconfig")
-local lspconfig = require("lspconfig")
+return {
+  "neovim/nvim-lspconfig",
 
-mason.setup()
-
-mason_lsp.setup({
-  ensure_installed = {
-    "pyright",
-    "clangd",
-    "tsserver",
-    "rust_analyzer",
-    "gopls",
-    "lua_ls",
+  dependencies = {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "hrsh7th/cmp-nvim-lsp",
+    "b0o/schemastore.nvim",
   },
-  automatic_installation = true,
-})
 
-local on_attach = function(client, bufnr)
-  local bufmap = function(mode, lhs, rhs)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, { noremap = true, silent = true })
-  end
-  bufmap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-  bufmap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-  bufmap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-end
+  config = function()
+    -----------------------------------------------------
+    -- Mason Setup
+    -----------------------------------------------------
+    local mason = require("mason")
+    local mason_lsp = require("mason-lspconfig")
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    mason.setup()
 
-local servers = {
-  "pyright",
-  "clangd",
-  "tsserver",
-  "rust_analyzer",
-  "gopls",
-  "lua_ls",
+    -- Valid LSP server names
+    local servers = {
+      "pyright",
+      "clangd",
+      "ts_ls",         -- ✔ FIXED (was tsserver)
+      "rust_analyzer",
+      "gopls",
+      "lua_ls",
+      "jsonls",
+      "html",
+      "cssls",
+    }
+
+    mason_lsp.setup({
+      ensure_installed = servers,
+      automatic_installation = true,
+    })
+
+    -----------------------------------------------------
+    -- LSP Setup
+    -----------------------------------------------------
+    local lspconfig = require("lspconfig")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    local function on_attach(_, bufnr)
+      local map = function(lhs, rhs)
+        vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true, buffer = bufnr })
+      end
+
+      map("gd", vim.lsp.buf.definition)
+      map("K",  vim.lsp.buf.hover)
+      map("<leader>rn", vim.lsp.buf.rename)
+      map("<leader>ca", vim.lsp.buf.code_action)
+    end
+
+    -----------------------------------------------------
+    -- Load custom configs from your file
+    -----------------------------------------------------
+    local custom = require("lsp.configs")
+
+    -----------------------------------------------------
+    -- Apply configs to each server
+    -----------------------------------------------------
+    for _, server in ipairs(servers) do
+      local opts = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      }
+
+      if custom[server] then
+        opts = vim.tbl_deep_extend("force", opts, custom[server])
+      end
+
+      lspconfig[server].setup(opts)
+    end
+  end,
 }
-
-for _, server in ipairs(servers) do
-  lspconfig[server].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
