@@ -47,6 +47,25 @@ require("lazy").setup({
       })
     end
   },
+  {
+    'voldikss/vim-floaterm',
+    cmd = { "FloatermNew", "FloatermToggle" },
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        open_mapping = [[<C-\>]],
+        direction = "float",
+        float_opts = {
+          border = "rounded",
+        },
+        size = 15,
+      })
+    end
+  },
+
   -- UI
   { "nvim-lualine/lualine.nvim", opts = {} },
   { "kyazdani42/nvim-web-devicons", lazy = true },
