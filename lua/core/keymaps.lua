@@ -23,5 +23,4 @@ map('n', '<leader>w', ':w<CR>', opts)
 -- Better indent in visual
 map('v', '<', '<gv', opts)
 map('v', '>', '>gv', opts)
-vim.keymap.set("n", "<leader>t", ":FloatermToggle<CR>")
-vim.keymap.set("t", "<leader>t", "<C-\\><C-n>:FloatermToggle<CR>")
+
