@@ -1,9 +1,20 @@
--- plugins/null-ls.lua
-local null_ls = require('null-ls')
-null_ls.setup({
-sources = {
-null_ls.builtins.formatting.prettier.with({ filetypes = { 'javascript', 'typescript', 'css', 'json', 'html' } }),
-null_ls.builtins.formatting.black,
-null_ls.builtins.diagnostics.eslint,
+return {
+  "nvimtools/none-ls.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+
+  config = function()
+    local null_ls = require("null-ls")
+
+    null_ls.setup({
+      sources = {
+        -- FORMATTERS
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettier,
+
+        -- LINTERS
+        null_ls.builtins.diagnostics.flake8,
+      },
+    })
+  end,
 }
-})
