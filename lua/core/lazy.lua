@@ -17,10 +17,9 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
--- 4. Setup lazy and plugin list
 require("lazy").setup({
 
- 
+
   { "nvim-lua/plenary.nvim", lazy = true },
 
 
@@ -37,8 +36,8 @@ require("lazy").setup({
     lazy = false,
     config = function()
       require("image").setup({
-        backend = "kitty",  
-        integrations = {},  
+        backend = "kitty",
+        integrations = {},
         max_width = 60,
         max_height = 40,
         max_depth = nil,
@@ -66,7 +65,7 @@ require("lazy").setup({
     end
   },
 
-  
+
   { "nvim-lualine/lualine.nvim", opts = {} },
   { "kyazdani42/nvim-web-devicons", lazy = true },
   { "akinsho/bufferline.nvim", version = "*", dependencies = "kyazdani42/nvim-web-devicons" },
@@ -77,12 +76,12 @@ require("lazy").setup({
 
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = function() require("plugins.treesitter") end },
 
-  
+
   { "williamboman/mason.nvim", config = true },
   { "williamboman/mason-lspconfig.nvim" },
   { "neovim/nvim-lspconfig", config = function() require("plugins.lsp") end },
 
-  
+
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip" },
@@ -90,24 +89,24 @@ require("lazy").setup({
   },
   { "L3MON4D3/LuaSnip", opts = {} },
 
- 
+
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function() require("plugins.null-ls") end,
     dependencies = { "nvim-lua/plenary.nvim" }
   },
 
- 
+
   { "lewis6991/gitsigns.nvim", opts = {} },
 
-  
+
   { "folke/noice.nvim", dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" }, opts = {} },
   { "rcarriga/nvim-notify" },
 
- 
+
   { "mfussenegger/nvim-dap", lazy = true },
 
- 
+
   { "b0o/SchemaStore.nvim", lazy = true },
   { "simrat39/rust-tools.nvim", ft = { "rust" }, lazy = true },
 

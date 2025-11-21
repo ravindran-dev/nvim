@@ -9,19 +9,16 @@ return {
   },
 
   config = function()
-    -----------------------------------------------------
-    -- Mason Setup
-    -----------------------------------------------------
+
     local mason = require("mason")
     local mason_lsp = require("mason-lspconfig")
 
     mason.setup()
 
-    -- Valid LSP server names
-    local servers = {
+       local servers = {
       "pyright",
       "clangd",
-      "ts_ls",         -- ✔ FIXED (was tsserver)
+      "ts_ls",
       "rust_analyzer",
       "gopls",
       "lua_ls",
@@ -35,9 +32,7 @@ return {
       automatic_installation = true,
     })
 
-    -----------------------------------------------------
-    -- LSP Setup
-    -----------------------------------------------------
+
     local lspconfig = require("lspconfig")
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -52,14 +47,10 @@ return {
       map("<leader>ca", vim.lsp.buf.code_action)
     end
 
-    -----------------------------------------------------
-    -- Load custom configs from your file
-    -----------------------------------------------------
+
     local custom = require("lsp.configs")
 
-    -----------------------------------------------------
-    -- Apply configs to each server
-    -----------------------------------------------------
+
     for _, server in ipairs(servers) do
       local opts = {
         on_attach = on_attach,

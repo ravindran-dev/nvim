@@ -7,12 +7,9 @@ return {
 
     null_ls.setup({
       sources = {
-        -- FORMATTERS
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettier,
-
-        -- LINTERS
         null_ls.builtins.diagnostics.flake8,
       },
     })
