@@ -11,6 +11,7 @@ local header = {
   "R   N V I M",
 }
 
+
 local menu = {
   { icon = "",  text = "Find File",        key = "f", cmd = "Telescope find_files" },
   { icon = "",  text = "New File",         key = "n", cmd = "enew" },
