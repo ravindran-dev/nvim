@@ -5,11 +5,17 @@ require("core.keymaps")
 require("core.autocmds")
 require("core.lazy")
 require("core.dashboard")
+
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-  require("core.dashboard").open()
+    if vim.fn.argc() == 0 then
+      require("core.dashboard").open()
+    end
   end,
 })
+
+
+
 vim.opt.shortmess:append("I")
 
 vim.keymap.set("n", "<leader>th", ":belowright split | terminal<CR>")
