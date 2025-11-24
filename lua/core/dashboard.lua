@@ -18,7 +18,7 @@ local menu = {
   { icon = "",  text = "Recent Files",     key = "r", cmd = "Telescope oldfiles" },
   { icon = "",  text = "Find Text",        key = "g", cmd = "Telescope live_grep" },
   { icon = "",  text = "Edit Config",      key = "c", cmd = "edit ~/.config/nvim/init.lua" },
-  { icon = "",  text = "Restore Session",  key = "s", cmd = "lua require('persistence').load()" },
+  { icon = "",  text = "Open Last Session", key = "s", cmd = "source Session.vim" },
   { icon = "󰒲",  text = "Lazy Menu",        key = "l", cmd = "Lazy" },
   { icon = "",  text = "Quit",             key = "q", cmd = "qa" },
 }
@@ -80,8 +80,7 @@ function M.open()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
 
-  vim.wo.number = false
-  vim.wo.relativenumber = false
+ 
   vim.wo.signcolumn = "no"
   vim.wo.cursorline = false
   vim.wo.wrap = false

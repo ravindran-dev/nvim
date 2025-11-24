@@ -41,6 +41,7 @@ o.sidescrolloff = 8
 
 o.updatetime = 250
 
+vim.opt.number = true
 
 
 vim.g.mapleader = " "

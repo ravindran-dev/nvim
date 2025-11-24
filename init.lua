@@ -13,6 +13,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    vim.cmd("mksession! ~/.local/share/nvim/session.vim")
+  end
+})
 
 
 
