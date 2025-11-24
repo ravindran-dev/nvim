@@ -6,7 +6,7 @@
 
 <p align="center">
 A beautifully structured, fast, and feature-rich Neovim configuration built with <b>Lua</b> and powered by <b>Lazy.nvim</b>.  
-Designed for developers who want performance, aesthetics, and productivity — all at once.
+Designed for developers who want performance, aesthetics, and productivity.
 </p>
 
 ---
