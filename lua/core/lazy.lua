@@ -64,6 +64,26 @@ require("lazy").setup({
       })
     end
   },
+  -- LeetCode
+    {
+    "kawre/leetcode.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("leetcode").setup({
+        arg = "leetcode",
+        lang = "python3",
+        storage = {
+          home = vim.fn.expand("~/.leetcode"),
+        },
+        -- no cookies here; use :Leet cookie update instead
+      })
+    end,
+  },
+
 
 
   { "nvim-lualine/lualine.nvim", opts = {} },
@@ -89,6 +109,12 @@ require("lazy").setup({
   },
   { "L3MON4D3/LuaSnip", opts = {} },
 
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      vim.g.gitblame_enabled = 0   -- start disabled (toggle when needed)
+    end,
+  },
 
   {
     "jose-elias-alvarez/null-ls.nvim",

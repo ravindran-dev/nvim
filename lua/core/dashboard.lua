@@ -1,6 +1,29 @@
 local api = vim.api
 local M = {}
 
+local function get_clock()
+  return os.date("  %I:%M %p     %d %b %Y")
+end
+
+local function git_status()
+  local branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("\n", "")
+  if branch == "" then return "No Git Repo" end
+
+  local changes = vim.fn.system("git status -s 2>/dev/null")
+  local count = select(2, changes:gsub("\n", ""))
+  return " " .. branch .. "  •  " .. count .. " changes"
+end
+
+local function get_launch_stats()
+  local ok, lazy = pcall(require, "lazy")
+  if not ok then
+    return " Plugins loaded"
+  end
+  local stats = lazy.stats()
+  local ms = math.floor(stats.startuptime * 100) / 100
+  return string.format(" %d plugins loaded in %sms", stats.count, ms)
+end
+
 local header = {
   "RRRRR     N   N    V     V   IIIII   M     M",
   "R    R    NN  N    V     V     I     MM   MM",
@@ -11,16 +34,16 @@ local header = {
   "R   N V I M",
 }
 
-
 local menu = {
-  { icon = "",  text = "Find File",        key = "f", cmd = "Telescope find_files" },
-  { icon = "",  text = "New File",         key = "n", cmd = "enew" },
-  { icon = "",  text = "Recent Files",     key = "r", cmd = "Telescope oldfiles" },
-  { icon = "",  text = "Find Text",        key = "g", cmd = "Telescope live_grep" },
-  { icon = "",  text = "Edit Config",      key = "c", cmd = "edit ~/.config/nvim/init.lua" },
+  { icon = "",  text = "Find File",         key = "f", cmd = "Telescope find_files" },
+  { icon = "",  text = "New File",          key = "n", cmd = "enew" },
+  { icon = "",  text = "Recent Files",      key = "r", cmd = "Telescope oldfiles" },
+  { icon = "",  text = "Find Text",         key = "g", cmd = "Telescope live_grep" },
+  { icon = "",  text = "Edit Config",       key = "c", cmd = "edit ~/.config/nvim/init.lua" },
   { icon = "",  text = "Open Last Session", key = "s", cmd = "source Session.vim" },
-  { icon = "  󰒲",  text = "Lazy Menu",        key = "l", cmd = "Lazy" },
-  { icon = "",  text = "Quit",             key = "q", cmd = "qa" },
+  { icon = "  󰒲", text = "Lazy Menu",         key = "l", cmd = "Lazy" },
+  { icon = "  󰒰",  text = "LeetCode",          key = "t", cmd = "Leet" },
+  { icon = "",  text = "Quit",              key = "q", cmd = "qa" },
 }
 
 local function center(str)
@@ -56,20 +79,42 @@ end
 local function render_menu(buf, pad_top)
   local start = pad_top + #header + 4
   local row = start
+
+  vim.bo[buf].modifiable = true
+
+  -- Weather (optional)
+  local ok_weather, weather_mod = pcall(require, "core.weather")
+  if ok_weather and weather_mod.get_weather then
+    local weather = weather_mod.get_weather()
+    api.nvim_buf_set_lines(buf, row, row + 1, false, { center(weather) })
+    row = row + 2
+  end
+
+  -- Git status
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(git_status()) })
+  row = row + 2
+
+  -- Launch stats
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
+  row = row + 2
+
+  local menu_start_row = row
+
+  -- Menu entries
   for _, m in ipairs(menu) do
     local left = string.format("%s  %-20s", m.icon, m.text)
     local right = string.format("[%s]", m.key)
     local composed = left .. string.rep(" ", 28) .. right
     local line = center(composed)
-    vim.bo[buf].modifiable = true
     api.nvim_buf_set_lines(buf, row, row + 1, false, { line })
-    vim.bo[buf].modifiable = false
     row = row + 2
   end
-  vim.bo[buf].modifiable = true
-  api.nvim_buf_set_lines(buf, row + 1, row + 2, false, { center("⚡ Neovim ready.") })
+
+  -- Clock at bottom
+  api.nvim_buf_set_lines(buf, row + 4, row + 5, false, { center(get_clock()) })
+
   vim.bo[buf].modifiable = false
-  return start
+  return menu_start_row
 end
 
 function M.open()
@@ -80,12 +125,12 @@ function M.open()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
 
-
   vim.wo.signcolumn = "no"
   vim.wo.cursorline = false
   vim.wo.wrap = false
   vim.wo.scrolloff = 99999
 
+  -- Disable insert-like keys on dashboard
   for _, key in ipairs({ "i", "a", "o", "O", "I", "A" }) do
     vim.keymap.set("n", key, "<nop>", { buffer = buf })
   end

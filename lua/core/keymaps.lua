@@ -30,3 +30,23 @@ map('n', '<leader>w', ':w<CR>', opts)
 map('v', '<', '<gv', opts)
 map('v', '>', '>gv', opts)
 
+
+-- Toggle inline git blame
+vim.keymap.set("n", "<leader>gb", function()
+  vim.cmd("GitBlameToggle")
+end, { desc = "Toggle Git Inline Blame" })
+
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- LeetCode: main panel
+map("n", "<leader>lc", "<cmd>Leet<CR>", vim.tbl_extend("force", opts, { desc = "LeetCode: open UI" }))
+
+-- LeetCode: daily challenge
+map("n", "<leader>ld", "<cmd>Leet daily<CR>", vim.tbl_extend("force", opts, { desc = "LeetCode: daily problem" }))
+
+-- LeetCode: problem list (filtered / searchable)
+map("n", "<leader>ll", "<cmd>Leet list<CR>", vim.tbl_extend("force", opts, { desc = "LeetCode: problem list" }))
+vim.keymap.set("n", "<leader>lc", "<cmd>Leet<CR>", { desc = "Open LeetCode UI" })
+vim.keymap.set("n", "<leader>ld", "<cmd>Leet daily<CR>", { desc = "Daily Challenge" })
+vim.keymap.set("n", "<leader>ll", "<cmd>Leet list<CR>", { desc = "LeetCode Problems" })
