@@ -79,7 +79,7 @@ require("lazy").setup({
         storage = {
           home = vim.fn.expand("~/.leetcode"),
         },
-        -- no cookies here; use :Leet cookie update instead
+        
       })
     end,
   },
@@ -112,7 +112,7 @@ require("lazy").setup({
   {
     "f-person/git-blame.nvim",
     config = function()
-      vim.g.gitblame_enabled = 0   -- start disabled (toggle when needed)
+      vim.g.gitblame_enabled = 0   
     end,
   },
 
