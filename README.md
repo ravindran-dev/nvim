@@ -113,7 +113,7 @@ yay -S nerd-fonts-complete
 ```
 ### 4️ Clone the R NVIM config
 ```zsh
-git clone https://github.com/<your-username>/r-nvim ~/.config/nvim
+git clone https://github.com/ravindran-dev/nvim.git
 ```
 ### 5️ Open Neovim
 ```zsh
