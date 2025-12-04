@@ -183,6 +183,36 @@ Lazy.nvim will automatically install all plugins.
 - nvim-tree or neo-tree – file explorer
 
 - toggleterm.nvim – terminal manager
+
+# Additional Features
+
+- Live clock + date display on dashboard
+
+- Weather display (API-based real-time update)
+
+- Git status overview (branch + changes count)
+
+- Launch stats showing plugin count & load time
+
+- Browser-based LeetCode login (no manual cookies) (Under issues)
+
+- Integrated LeetCode problem navigation, test & submit
+
+- Session restore with one click
+
+- Responsive, highlighted dashboard menu navigation
+
+- Global VSCode-like keymaps (Copy/Paste/Undo/Redo/Select all)
+
+- Line numbers & relative line numbers enabled by default
+
+- Improved non-scrollable fixed dashboard layout
+
+# R NVIM UI example:
+
+<img width="1920" height="1014" alt="image" src="https://github.com/user-attachments/assets/a01ab1b3-b85c-408f-b408-639d9ab971d0" />
+
+
 # Contributing
 
 Contributions are welcome!
@@ -212,7 +242,7 @@ R NVIM is my personal Neovim distribution - built to be fast, beautiful, and pro
 
 You can reach me here:
 
-###  **Social**
+###  **Socials**
 - [**GitHub**](https://github.com/ravindran-dev)
 - [**LinkedIn**](www.linkedin.com/in/ravindran-s-982702327)
 
