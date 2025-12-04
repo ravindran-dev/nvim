@@ -201,12 +201,10 @@ Hi! I'm **Ravindran S**, an engineering student passionate about:
 
 -  Linux & System Engineering  
 -  AIML (Artificial Intelligence & Machine Learning)  
--  Building developer tooling  
--  Optimizing Neovim workflows  
 -  Full-stack Web Development  
 -  Hackathon-grade project development  
 
-R NVIM is my personal Neovim distribution — built to be fast, beautiful, and productive.
+R NVIM is my personal Neovim distribution - built to be fast, beautiful, and productive.
 
 ---
 
