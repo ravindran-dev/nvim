@@ -1,14 +1,6 @@
 local api = vim.api
 local M = {}
-local function visual_len(str)
-  return vim.fn.strdisplaywidth(str)
-end
 
-local function center(str)
-  local win_width = vim.o.columns
-  local pad = math.floor((win_width - visual_len(str)) / 2)
-  return string.rep(" ", pad) .. str
-end
 
 local function get_clock()
   return os.date("  %I:%M %p     %d %b %Y")
@@ -42,6 +34,7 @@ local header = {
   "",
   "R   N V I M",
 }
+
 local menu = {
   { icon = "",  text = "Find File",         key = "f", cmd = "Telescope find_files" },
   { icon = "",  text = "New File",          key = "n", cmd = "enew" },
@@ -49,20 +42,24 @@ local menu = {
   { icon = "",  text = "Find Text",         key = "g", cmd = "Telescope live_grep" },
   { icon = "",  text = "Edit Config",       key = "c", cmd = "edit ~/.config/nvim/init.lua" },
   { icon = "",  text = "Open Last Session", key = "s", cmd = "source Session.vim" },
-  { icon = "  󰒲", text = "Lazy Menu",         key = "l", cmd = "Lazy" },
-  { icon = "  󰒰",  text = "LeetCode",          key = "t", cmd = "Leet" },
+  { icon = "󰒲",  text = "Lazy Menu",         key = "l", cmd = "Lazy" },
+  { icon = "󰒰",  text = "LeetCode",          key = "t", cmd = "Leet" },
   { icon = "",  text = "Quit",              key = "q", cmd = "qa" },
 }
 
+local function visual_len(str)
+  return vim.fn.strdisplaywidth(str)
+end
+
 local function center(str)
   local win_width = vim.o.columns
-  local pad = math.floor((win_width - #str) / 2)
+  local pad = math.floor((win_width - visual_len(str)) / 2)
   if pad < 0 then pad = 0 end
   return string.rep(" ", pad) .. str
 end
 
 local function make_empty()
-  local total = #header + (#menu * 2) + 10
+  local total = #header + (#menu * 2) + 12
   local pad_top = math.floor((vim.o.lines - total) / 2)
   local lines = {}
   for _ = 1, pad_top do table.insert(lines, "") end
@@ -84,45 +81,49 @@ local function animate_header(buf, pad_top)
   step()
 end
 
-local function render_menu(buf, pad_top)
-  local start = pad_top + #header + 4
-  local row = start
+local menu_positions = {}
 
+local function render_menu(buf, pad_top)
+  menu_positions = {}
+
+  local row = pad_top + #header + 4
   vim.bo[buf].modifiable = true
 
-  -- Weather (optional)
-  local ok_weather, weather_mod = pcall(require, "core.weather")
+    local ok_weather, weather_mod = pcall(require, "core.weather")
   if ok_weather and weather_mod.get_weather then
     local weather = weather_mod.get_weather()
     api.nvim_buf_set_lines(buf, row, row + 1, false, { center(weather) })
     row = row + 2
   end
 
-  -- Git status
-  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(git_status()) })
+   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(git_status()) })
   row = row + 2
 
-  -- Launch stats
-  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
+   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
   row = row + 2
 
-  local menu_start_row = row
-
-  -- Menu entries
-  for _, m in ipairs(menu) do
+   for _, m in ipairs(menu) do
     local left = string.format("%s  %-20s", m.icon, m.text)
     local right = string.format("[%s]", m.key)
-    local composed = left .. string.rep(" ", 28) .. right
+    local composed = left .. "    " .. right
     local line = center(composed)
+
     api.nvim_buf_set_lines(buf, row, row + 1, false, { line })
+
+       local first = line:find("%S") or 1
+    local last_byte = line:match(".*%S()") or (#line + 1)
+    table.insert(menu_positions, {
+      row = row,
+      col_start = first - 1,     -- 0-based
+      col_end = last_byte - 1,   -- end_col is exclusive
+    })
+
     row = row + 2
   end
 
-  -- Clock at bottom
-  api.nvim_buf_set_lines(buf, row + 4, row + 5, false, { center(get_clock()) })
+   api.nvim_buf_set_lines(buf, row + 1, row + 2, false, { center(get_clock()) })
 
   vim.bo[buf].modifiable = false
-  return menu_start_row
 end
 
 function M.open()
@@ -133,12 +134,13 @@ function M.open()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
 
+  vim.wo.number = false
+  vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
   vim.wo.cursorline = false
   vim.wo.wrap = false
   vim.wo.scrolloff = 99999
 
-  -- Disable insert-like keys on dashboard
   for _, key in ipairs({ "i", "a", "o", "O", "I", "A" }) do
     vim.keymap.set("n", key, "<nop>", { buffer = buf })
   end
@@ -151,19 +153,23 @@ function M.open()
   animate_header(buf, pad_top)
 
   vim.defer_fn(function()
-    local start_row = render_menu(buf, pad_top)
+    render_menu(buf, pad_top)
+
     local ns = api.nvim_create_namespace("rnvim_dash")
     local current = 1
 
     local function highlight(idx)
       api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-      local row = start_row + (idx - 1) * 2
-      api.nvim_buf_set_extmark(buf, ns, row, 0, {
-        end_row = row + 1,
-        hl_group = "Visual",
-        hl_eol = true,
-        priority = 9999,
-      })
+      local pos = menu_positions[idx]
+      if not pos then return end
+      api.nvim_buf_add_highlight(
+        buf,
+        ns,
+        "Visual",
+        pos.row,
+        pos.col_start,
+        pos.col_end
+      )
     end
 
     highlight(1)
@@ -198,3 +204,4 @@ function M.open()
 end
 
 return M
+
