@@ -67,11 +67,17 @@ local function make_empty()
 end
 
 local function animate_header(buf, pad_top)
-  vim.bo[buf].modifiable = true
-  for i, line in ipairs(header) do
-    api.nvim_buf_set_lines(buf, pad_top + i, pad_top + i + 1, false, { center(line) })
+  local i = 1
+  local function step()
+    if not api.nvim_buf_is_valid(buf) then return end
+    if i > #header then return end
+    vim.bo[buf].modifiable = true
+    api.nvim_buf_set_lines(buf, pad_top + i, pad_top + i + 1, false, { center(header[i]) })
+    vim.bo[buf].modifiable = false
+    i = i + 1
+    vim.defer_fn(step, 10)
   end
-  vim.bo[buf].modifiable = false
+  step()
 end
 
 local menu_positions = {}
