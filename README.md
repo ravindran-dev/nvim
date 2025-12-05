@@ -9,7 +9,7 @@ A beautifully structured, fast, and feature-rich Neovim configuration built with
 
 </p>
 
----
+
 
 ##  Preview
 ```mathematica
@@ -20,7 +20,7 @@ R   R     N  NN      V V       I     M  M  M
 R    R    N   N       V      IIIII   M     M
 ```
 
----
+
 
 ##  Features
 
@@ -90,7 +90,7 @@ R    R    N   N       V      IIIII   M     M
 - Instant startup time  
 - Clean keymap design  
 
----
+
 
 ##  Installation
 
@@ -278,7 +278,7 @@ Hi! I'm **Ravindran S**, an engineering student passionate about:
 
 R NVIM is my personal Neovim distribution - built to be fast, beautiful, and productive.
 
----
+
 
 ## 🔗 Connect With Me
 
