@@ -252,7 +252,8 @@ Lazy.nvim will automatically install all plugins.
 
 ## R NVIM UI example:
 
-<img width="1920" height="1014" alt="image" src="https://github.com/user-attachments/assets/a01ab1b3-b85c-408f-b408-639d9ab971d0" />
+<img width="1920" height="1015" alt="image" src="https://github.com/user-attachments/assets/39abb901-c182-4460-ba4d-2b8268690782" />
+
 
 
 ## Contributing
