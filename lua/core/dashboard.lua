@@ -103,7 +103,7 @@ local function render_menu(buf, pad_top)
   row = row + 2
 
    for _, m in ipairs(menu) do
-    local left = string.format("%s  %-20s", m.icon, m.text)
+    local left = string.format("%s  %-40s", m.icon, m.text)
     local right = string.format("[%s]", m.key)
     local composed = left .. "    " .. right
     local line = center(composed)
