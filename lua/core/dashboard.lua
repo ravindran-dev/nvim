@@ -26,13 +26,12 @@ local function get_launch_stats()
 end
 
 local header = {
-  "RRRRR     N   N    V     V   IIIII   M     M",
-  "R    R    NN  N    V     V     I     MM   MM",
-  "RRRRR     N N N     V   V      I     M M M M",
-  "R   R     N  NN      V V       I     M  M  M",
-  "R    R    N   N       V      IIIII   M     M",
-  "",
-  "R   N V I M",
+  "  ██████╗     ███╗   ██╗██╗   ██╗██╗███╗   ███╗",
+  "  ██╔══██╗    ████╗  ██║██║   ██║██║████╗ ████║",
+  "  ██████╔╝    ██╔██╗ ██║██║   ██║██║██╔████╔██║",
+  "  ██╔══██╗    ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║",
+  "  ██║  ██║    ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║",
+  "  ╚═╝  ╚═╝    ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝",
 }
 
 local menu = {
@@ -68,17 +67,11 @@ local function make_empty()
 end
 
 local function animate_header(buf, pad_top)
-  local i = 1
-  local function step()
-    if not api.nvim_buf_is_valid(buf) then return end
-    if i > #header then return end
-    vim.bo[buf].modifiable = true
-    api.nvim_buf_set_lines(buf, pad_top + i, pad_top + i + 1, false, { center(header[i]) })
-    vim.bo[buf].modifiable = false
-    i = i + 1
-    vim.defer_fn(step, 55)
+  vim.bo[buf].modifiable = true
+  for i, line in ipairs(header) do
+    api.nvim_buf_set_lines(buf, pad_top + i, pad_top + i + 1, false, { center(line) })
   end
-  step()
+  vim.bo[buf].modifiable = false
 end
 
 local menu_positions = {}
@@ -103,7 +96,7 @@ local function render_menu(buf, pad_top)
   row = row + 2
 
    for _, m in ipairs(menu) do
-    local left = string.format("%s  %-40s", m.icon, m.text)
+    local left = string.format("%s  %-50s", m.icon, m.text)
     local right = string.format("[%s]", m.key)
     local composed = left .. "    " .. right
     local line = center(composed)
