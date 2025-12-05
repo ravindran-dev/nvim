@@ -1,5 +1,14 @@
 local api = vim.api
 local M = {}
+local function visual_len(str)
+  return vim.fn.strdisplaywidth(str)
+end
+
+local function center(str)
+  local win_width = vim.o.columns
+  local pad = math.floor((win_width - visual_len(str)) / 2)
+  return string.rep(" ", pad) .. str
+end
 
 local function get_clock()
   return os.date("  %I:%M %p     %d %b %Y")
@@ -33,7 +42,6 @@ local header = {
   "",
   "R   N V I M",
 }
-
 local menu = {
   { icon = "",  text = "Find File",         key = "f", cmd = "Telescope find_files" },
   { icon = "",  text = "New File",          key = "n", cmd = "enew" },
