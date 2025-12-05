@@ -6,12 +6,12 @@
 
 <p align="center">
 A beautifully structured, fast, and feature-rich Neovim configuration built with <b>Lua</b> and powered by <b>Lazy.nvim</b>.  
-Designed for developers who want performance, aesthetics, and productivity.
+
 </p>
 
 ---
 
-##  Preview (ASCII Dashboard)
+##  Preview
 ```mathematica
 RRRRR     N   N    V     V   IIIII   M     M
 R    R    NN  N    V     V     I     MM   MM
@@ -22,7 +22,7 @@ R    R    N   N       V      IIIII   M     M
 
 ---
 
-#  Features
+##  Features
 
 ###  **Custom Animated Dashboard**
 - Fully custom-built animated startup screen  
@@ -58,12 +58,12 @@ R    R    N   N       V      IIIII   M     M
 - Formatting + linting  
 - Error diagnostics  
 
-###  **Auto-completion (nvim-cmp)**
+###  **Auto-completion**
 - Snippet support via LuaSnip  
 - LSP autocompletion  
 - Keyword suggestions  
 
-###  **Formatting (null-ls or none-ls)**
+###  **Formatting**
 - Code formatting  
 - Code actions  
 - Linting  
@@ -92,9 +92,9 @@ R    R    N   N       V      IIIII   M     M
 
 ---
 
-#  Installation
+##  Installation
 
-### 1️ **Install Neovim (0.9+ recommended)**
+### 1️ **Install Neovim**
 
 For Arch Linux:
 
@@ -121,30 +121,42 @@ nvim
 ```
 Lazy.nvim will automatically install all plugins.
 
-# Folder Structure
+## Folder Structure
 ```yaml
 ~/.config/nvim
 ├── init.lua
+├── LICENSE
+├── README.md
+├── SECURITY.md
 ├── lua
 │   ├── core
-│   │   ├── keymaps.lua
-│   │   ├── options.lua
-│   │   ├── lazy.lua
-│   │   ├── dashboard.lua
+│   │   ├── lazy.lua                
+│   │   ├── dashboard.lua           
+│   │   ├── options.lua             
+│   │   ├── keymaps.lua             
+│   │   ├── weather.lua             
+│   │   ├── leetcode_cookie.lua   
+│   │   ├── leetcode_browser.lua    
+│   │   ├── autocomds.lua           
+│   │   ├── configs.lua             
+│   ├── scripts
+│   │   ├── get_leetcode_cookie.py  
+│   ├── utils.lua                   
 │   ├── plugins
-│   │   ├── treesitter.lua
-│   │   ├── lsp.lua
-│   │   ├── cmp.lua
-│   │   ├── null-ls.lua
-│   │   ├── telescope.lua
-│   │   ├── ui.lua
-|   |── lsp
-|   |   |── configs.lua
-|   |── utils.lua
-└── README.md
+│       ├── lsp.lua                
+│       ├── cmp.lua                 
+│       ├── telescope.lua           
+│       ├── treesitter.lua          
+│       ├── null-ls.lua             
+│       ├── git.lua                 
+│       ├── git-blame.lua          
+│       ├── persistence.lua         
+│       ├── ui.lua                 
+│       ├── leetcode.lua            
+
 ```
 
-# Keymaps (Important)
+## Keymaps (Important)
 ### Shortcut	Action
 - Ctrl + A	Select All
 - Ctrl + C	Copy
@@ -158,33 +170,63 @@ Lazy.nvim will automatically install all plugins.
 - Space + l	Lazy Menu
 - q	Quit Dashboard
 
-# Plugins Used
+## Plugins Used
 
-- Lazy.nvim – plugin manager
-
-- Catppuccin – color scheme
-
-- Telescope – fuzzy finder
-
-- Treesitter – syntax engine
-
-- LSPConfig – language server support
-
-- Mason – language server installer
-
-- nvim-cmp – completion
-
-- LuaSnip – snippets
-
-- null-ls – formatting/linting
-
-- gitsigns.nvim – git decorations
-
-- nvim-tree or neo-tree – file explorer
-
-- toggleterm.nvim – terminal manager
-
-# Additional Features
+ - Lazy.nvim – modern plugin manager
+  
+ - Catppuccin – color scheme & UI theme
+  
+ - Telescope – fuzzy file and text finder
+  
+ - Telescope-fzf-native – performance boost for search
+  
+ - Treesitter – advanced syntax parser
+  
+ - LSPConfig – language server support
+  
+ - Mason – auto-installation of LSPs
+  
+ - Mason-LSPConfig – LSP auto-wiring
+  
+ - nvim-cmp – auto-completion engine
+  
+ - LuaSnip – snippet engine
+  
+ - cmp-nvim-lsp – LSP completion source
+  
+ - cmp-path – path completion
+  
+ - cmp-buffer – buffer content completion
+  
+ - cmp-cmdline – command-line completion
+  
+ - none-ls (null-ls) – formatting & linting
+  
+ - GitSigns – git change visualization
+  
+ - Git-Blame.nvim – inline git line blame
+  
+ - Persistence.nvim – auto session restore
+  
+ - ToggleTerm – floating & split terminals
+  
+ - Neotree / Nvim-tree – file explorer (your choice)
+  
+ - LeetCode.nvim – solve Leetcode inside Neovim
+  
+ - nvim-web-devicons – developer icons
+  
+ - Bufferline.nvim – tab-like buffer view
+  
+ - Lualine.nvim – bottom statusline
+  
+ - Plenary.nvim – base library for plugins
+  
+ - nvim-notify – stylish notifications
+  
+ - indent-blankline.nvim – indentation guides
+  
+## Additional Features
 
 - Live clock + date display on dashboard
 
@@ -208,21 +250,21 @@ Lazy.nvim will automatically install all plugins.
 
 - Improved non-scrollable fixed dashboard layout
 
-# R NVIM UI example:
+## R NVIM UI example:
 
 <img width="1920" height="1014" alt="image" src="https://github.com/user-attachments/assets/a01ab1b3-b85c-408f-b408-639d9ab971d0" />
 
 
-# Contributing
+## Contributing
 
 Contributions are welcome!
 Open an issue or create a pull request.
 
-# License
+## License
 
 This project is licensed under the MIT License.
 
-#  Author - **Ravindran S** 
+##  Author - **Ravindran S** 
 
 
 Developer • ML Enthusiast • Neovim Customizer • Linux Power User  
@@ -238,7 +280,7 @@ R NVIM is my personal Neovim distribution - built to be fast, beautiful, and pro
 
 ---
 
-# 🔗 Connect With Me
+## 🔗 Connect With Me
 
 You can reach me here:
 
