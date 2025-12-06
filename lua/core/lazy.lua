@@ -32,6 +32,17 @@ require("lazy").setup({
     end
   },
   {
+    "ellisonleao/glow.nvim",
+    cmd = "Glow",
+    config = true,  -- uses default config
+  },
+  {
+    "SmiteshP/nvim-navic",
+    lazy = true,
+    dependencies = { "neovim/nvim-lspconfig" },
+  },
+
+  {
     "3rd/image.nvim",
     lazy = false,
     config = function()
@@ -79,7 +90,7 @@ require("lazy").setup({
         storage = {
           home = vim.fn.expand("~/.leetcode"),
         },
-        
+
       })
     end,
   },
@@ -112,7 +123,13 @@ require("lazy").setup({
   {
     "f-person/git-blame.nvim",
     config = function()
-      vim.g.gitblame_enabled = 0   
+      vim.g.gitblame_enabled = 0
+    end,
+  },
+  {
+    "Vigemus/iron.nvim",
+    config = function()
+      require("plugins.iron")
     end,
   },
 

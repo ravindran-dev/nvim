@@ -60,7 +60,6 @@ end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<C-z>", "u", { noremap = true, silent = true })
 
-
 vim.keymap.set("i", "<C-z>", function()
   vim.cmd("normal! u")
 end, { noremap = true, silent = true })

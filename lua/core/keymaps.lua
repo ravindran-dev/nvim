@@ -50,3 +50,16 @@ map("n", "<leader>ll", "<cmd>Leet list<CR>", vim.tbl_extend("force", opts, { des
 vim.keymap.set("n", "<leader>lc", "<cmd>Leet<CR>", { desc = "Open LeetCode UI" })
 vim.keymap.set("n", "<leader>ld", "<cmd>Leet daily<CR>", { desc = "Daily Challenge" })
 vim.keymap.set("n", "<leader>ll", "<cmd>Leet list<CR>", { desc = "LeetCode Problems" })
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+map("n", "<leader>mp", "<cmd>Glow<CR>", vim.tbl_extend("force", opts, { desc = "Markdown Preview" }))
+
+vim.keymap.set("n", "<leader>lp", function()
+  require("core.plugin_search").open()
+end, { desc = "Search Installed Plugins" })
+local map = vim.keymap.set
+
+map("n", "<leader>dd", function()
+  require("core.dashboard").open()
+end, { desc = "Open R NVIM dashboard" })

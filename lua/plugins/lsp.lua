@@ -1,67 +1,64 @@
+-- lua/plugins/lsp.lua
 return {
   "neovim/nvim-lspconfig",
-
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    "b0o/schemastore.nvim",
+    "SmiteshP/nvim-navic",
   },
-
   config = function()
-
+    local lspconfig = require("lspconfig")
     local mason = require("mason")
-    local mason_lsp = require("mason-lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
+    local cmp_cap = require("cmp_nvim_lsp").default_capabilities()
+
+    local navic_ok, navic = pcall(require, "nvim-navic")
 
     mason.setup()
 
-       local servers = {
-      "pyright",
-      "clangd",
-      "ts_ls",
-      "rust_analyzer",
-      "gopls",
-      "lua_ls",
-      "jsonls",
-      "html",
-      "cssls",
-    }
-
-    mason_lsp.setup({
-      ensure_installed = servers,
+    mason_lspconfig.setup({
+      ensure_installed = {
+        "clangd",        -- C/C++
+        "pyright",       -- Python
+        "tsserver",      -- TS/JS
+        "lua_ls",        -- Lua
+        "gopls",         -- Go
+        "rust_analyzer", -- Rust
+      },
       automatic_installation = true,
     })
 
-
-    local lspconfig = require("lspconfig")
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-    local function on_attach(_, bufnr)
-      local map = function(lhs, rhs)
-        vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true, buffer = bufnr })
+    local on_attach = function(client, bufnr)
+      local map = function(mode, lhs, rhs)
+        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, noremap = true })
       end
 
-      map("gd", vim.lsp.buf.definition)
-      map("K",  vim.lsp.buf.hover)
-      map("<leader>rn", vim.lsp.buf.rename)
-      map("<leader>ca", vim.lsp.buf.code_action)
+      -- basic LSP mappings
+      map("n", "gd", vim.lsp.buf.definition)
+      map("n", "K", vim.lsp.buf.hover)
+      map("n", "<leader>rn", vim.lsp.buf.rename)
+
+      -- breadcrumbs
+      if navic_ok and client.server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
+      end
     end
 
-
-    local custom = require("lsp.configs")
-
+    local servers = {
+      "clangd",
+      "pyright",
+      "tsserver",
+      "lua_ls",
+      "gopls",
+      "rust_analyzer",
+    }
 
     for _, server in ipairs(servers) do
-      local opts = {
+      lspconfig[server].setup({
         on_attach = on_attach,
-        capabilities = capabilities,
-      }
-
-      if custom[server] then
-        opts = vim.tbl_deep_extend("force", opts, custom[server])
-      end
-
-      lspconfig[server].setup(opts)
+        capabilities = cmp_cap,
+      })
     end
   end,
 }
