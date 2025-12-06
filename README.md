@@ -13,11 +13,12 @@ A beautifully structured, fast, and feature-rich Neovim configuration built with
 
 ##  Preview
 ```mathematica
-RRRRR     N   N    V     V   IIIII   M     M
-R    R    NN  N    V     V     I     MM   MM
-RRRRR     N N N     V   V      I     M M M M
-R   R     N  NN      V V       I     M  M  M
-R    R    N   N       V      IIIII   M     M
+     ██████╗     ███╗   ██╗██╗   ██╗██╗███╗   ███╗
+     ██╔══██╗    ████╗  ██║██║   ██║██║████╗ ████║
+     ██████╔╝    ██╔██╗ ██║██║   ██║██║██╔████╔██║
+     ██╔══██╗    ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
+     ██║  ██║    ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
+     ╚═╝  ╚═╝    ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
 ```
 
 
