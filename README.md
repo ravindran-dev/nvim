@@ -173,59 +173,69 @@ Lazy.nvim will automatically install all plugins.
 
 ## Plugins Used
 
- - Lazy.nvim – modern plugin manager
+ - Lazy.nvim - modern plugin manager
   
- - Catppuccin – color scheme & UI theme
+ - Catppuccin - color scheme & UI theme
   
- - Telescope – fuzzy file and text finder
+ - Telescope - fuzzy file and text finder
   
- - Telescope-fzf-native – performance boost for search
+ - Telescope-fzf-native - performance boost for search
   
- - Treesitter – advanced syntax parser
+ - Treesitter - advanced syntax parser
   
- - LSPConfig – language server support
+ - LSPConfig - language server support
   
- - Mason – auto-installation of LSPs
+ - Mason - auto-installation of LSPs
   
- - Mason-LSPConfig – LSP auto-wiring
+ - Mason-LSPConfig -LSP auto-wiring
   
- - nvim-cmp – auto-completion engine
+ - nvim-cmp - auto-completion engine
   
- - LuaSnip – snippet engine
+ - LuaSnip - snippet engine
   
- - cmp-nvim-lsp – LSP completion source
+ - cmp-nvim-lsp - LSP completion source
   
- - cmp-path – path completion
+ - cmp-path - path completion
   
- - cmp-buffer – buffer content completion
+ - cmp-buffer - buffer content completion
   
- - cmp-cmdline – command-line completion
+ - cmp-cmdline - command-line completion
   
- - none-ls (null-ls) – formatting & linting
+ - none-ls (null-ls) - formatting & linting
   
- - GitSigns – git change visualization
+ - GitSigns - git change visualization
   
- - Git-Blame.nvim – inline git line blame
+ - Git-Blame.nvim - inline git line blame
   
- - Persistence.nvim – auto session restore
+ - Persistence.nvim - auto session restore
   
- - ToggleTerm – floating & split terminals
+ - ToggleTerm - floating & split terminals
   
- - Neotree / Nvim-tree – file explorer (your choice)
+ - Neotree / Nvim-tree - file explorer (your choice)
   
- - LeetCode.nvim – solve Leetcode inside Neovim
+ - LeetCode.nvim - solve Leetcode inside Neovim
   
- - nvim-web-devicons – developer icons
+ - nvim-web-devicons - developer icons
   
- - Bufferline.nvim – tab-like buffer view
+ - Bufferline.nvim - tab-like buffer view
   
- - Lualine.nvim – bottom statusline
+ - Lualine.nvim - bottom statusline
   
- - Plenary.nvim – base library for plugins
+ - Plenary.nvim - base library for plugins
   
- - nvim-notify – stylish notifications
+ - nvim-notify - stylish notifications
   
- - indent-blankline.nvim – indentation guides
+ - indent-blankline.nvim - indentation guides
+   
+ - Vigemus/iron.nvim - Adds a REPL panel for Python, Node, Bash, Lua and sends code live to terminal.
+
+- MunifTanjim/nui.nvim - UI component library powering popups and advanced layout windows.
+
+- nvim-lualine/lualine.nvim - Status line plugin used for displaying breadcrumbs & system stats.
+
+- nvim-tree/nvim-web-devicons - Icon pack for the dashboard, menu icons, and file types.
+
+- SmiteshP/nvim-navic - Provides breadcrumb navigation and an outline sidebar for code structure.
   
 ## Additional Features
 
@@ -250,6 +260,16 @@ Lazy.nvim will automatically install all plugins.
 - Line numbers & relative line numbers enabled by default
 
 - Improved non-scrollable fixed dashboard layout
+
+- Dashboard message changes based on morning, afternoon, evening, or late night usage.
+
+- <leader>dd) - Jump to the dashboard immediately from anywhere in Nvim.
+
+- Shows live CPU inside the dashboard.
+
+- Displays Neovim’s current Lua memory usage in MB.
+
+- Quick search through installed plugins directly from the dashboard menu.
 
 ## R NVIM UI example:
 
