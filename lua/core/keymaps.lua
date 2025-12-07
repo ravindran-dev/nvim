@@ -63,3 +63,7 @@ local map = vim.keymap.set
 map("n", "<leader>dd", function()
   require("core.dashboard").open()
 end, { desc = "Open R NVIM dashboard" })
+
+vim.keymap.set("n", "<leader>ss", function()
+  require("persistence").save()
+end, { desc = "Save Session" })

@@ -2,17 +2,27 @@ local api = vim.api
 local M = {}
 local system = require("core.system")
 
--- Lua memory usage
+local function open_last_session()
+  local ok, persistence = pcall(require, "persistence")
+  if not ok then
+    vim.notify("persistence.nvim is not installed", vim.log.levels.ERROR)
+    return
+  end
+  local buf = api.nvim_get_current_buf()
+  if api.nvim_buf_is_valid(buf) then
+    api.nvim_buf_delete(buf, { force = true })
+  end
+  persistence.load()
+end
+
 local function get_memory_usage()
-  local kb = collectgarbage("count") -- KB
+  local kb = collectgarbage("count")
   local mb = math.floor(kb / 1024 * 100) / 100
   return string.format(" Lua memory: %.2f MB", mb)
 end
 
--- Time-based greeting
 local function get_greeting()
   local hour = tonumber(os.date("%H"))
-
   if hour < 5 then
     return "🌙 Late night – go easy on yourself."
   elseif hour < 12 then
@@ -24,24 +34,20 @@ local function get_greeting()
   end
 end
 
--- Clock
 local function get_clock()
   return os.date("  %I:%M %p     %d %b %Y")
 end
 
--- Git status
 local function git_status()
   local branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("\n", "")
   if branch == "" then
     return "No Git Repo"
   end
-
   local changes = vim.fn.system("git status -s 2>/dev/null")
   local count = select(2, changes:gsub("\n", ""))
   return " " .. branch .. "  •  " .. count .. " changes"
 end
 
--- Lazy.nvim startup stats
 local function get_launch_stats()
   local ok, lazy = pcall(require, "lazy")
   if not ok then
@@ -52,7 +58,6 @@ local function get_launch_stats()
   return string.format(" %d plugins loaded in %sms", stats.count, ms)
 end
 
--- Header (R NVIM 3D-style)
 local header = {
   "  ██████╗     ███╗   ██╗██╗   ██╗██╗███╗   ███╗",
   "  ██╔══██╗    ████╗  ██║██║   ██║██║████╗ ████║",
@@ -62,26 +67,23 @@ local header = {
   "  ╚═╝  ╚═╝    ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝",
 }
 
--- Menu entries
 local menu = {
   { icon = "",  text = "Find File",         key = "f", cmd = "Telescope find_files" },
   { icon = "",  text = "New File",          key = "n", cmd = "enew" },
   { icon = "",  text = "Recent Files",      key = "r", cmd = "Telescope oldfiles" },
   { icon = "",  text = "Find Text",         key = "g", cmd = "Telescope live_grep" },
   { icon = "",  text = "Edit Config",       key = "c", cmd = "edit ~/.config/nvim/init.lua" },
-  { icon = "",  text = "Open Last Session", key = "s", cmd = "source Session.vim" },
+  { icon = "",  text = "Open Last Session", key = "s", action = open_last_session },
   { icon = "󰒲",  text = "Lazy Menu",         key = "l", cmd = "Lazy" },
   { icon = "",  text = "Search Plugins",    key = "p", cmd = "lua require('core.plugin_search').open()" },
   { icon = "󰒰",  text = "LeetCode",          key = "t", cmd = "Leet" },
   { icon = "",  text = "Quit",              key = "q", cmd = "qa" },
 }
 
--- Display width helper (handles nerd fonts)
 local function visual_len(str)
   return vim.fn.strdisplaywidth(str)
 end
 
--- Center a string in the window
 local function center(str)
   local win_width = vim.o.columns
   local pad = math.floor((win_width - visual_len(str)) / 2)
@@ -91,7 +93,6 @@ local function center(str)
   return string.rep(" ", pad) .. str
 end
 
--- Create empty buffer skeleton
 local function make_empty()
   local total = #header + (#menu * 2) + 14
   local pad_top = math.floor((vim.o.lines - total) / 2)
@@ -105,7 +106,6 @@ local function make_empty()
   return lines, pad_top
 end
 
--- Header animation (still lightweight)
 local function animate_header(buf, pad_top)
   local i = 1
   local function step()
@@ -119,26 +119,21 @@ local function animate_header(buf, pad_top)
     api.nvim_buf_set_lines(buf, pad_top + i, pad_top + i + 1, false, { center(header[i]) })
     vim.bo[buf].modifiable = false
     i = i + 1
-    vim.defer_fn(step, 10) -- reduce if you want even faster (e.g. 5)
+    vim.defer_fn(step, 10)
   end
   step()
 end
 
--- Positions for per-line highlight
 local menu_positions = {}
 
--- Render status lines + menu
 local function render_menu(buf, pad_top)
   menu_positions = {}
-
   local row = pad_top + #header + 4
   vim.bo[buf].modifiable = true
 
-  -- Greeting
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_greeting()) })
   row = row + 2
 
-  -- Weather (optional)
   local ok_weather, weather_mod = pcall(require, "core.weather")
   if ok_weather and weather_mod.get_weather then
     local weather = weather_mod.get_weather()
@@ -146,21 +141,15 @@ local function render_menu(buf, pad_top)
     row = row + 2
   end
 
-  -- Git status
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(git_status()) })
   row = row + 2
 
-  -- Launch stats
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
   row = row + 2
 
-  -- System stats
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(system.get_system_stats()) })
   row = row + 2
 
-  
-
-  -- Menu entries
   for _, m in ipairs(menu) do
     local left = string.format("%s  %-50s", m.icon, m.text)
     local right = string.format("[%s]", m.key)
@@ -174,20 +163,18 @@ local function render_menu(buf, pad_top)
 
     table.insert(menu_positions, {
       row = row,
-      col_start = first - 1,   -- 0-based
-      col_end = last_byte - 1, -- end_col exclusive
+      col_start = first - 1,
+      col_end = last_byte - 1,
     })
 
     row = row + 2
   end
 
-  -- Clock at bottom
   api.nvim_buf_set_lines(buf, row + 1, row + 2, false, { center(get_clock()) })
 
   vim.bo[buf].modifiable = false
 end
 
--- Open dashboard (NO outer defer_fn → instant load)
 function M.open()
   vim.cmd("enew")
   local buf = api.nvim_get_current_buf()
@@ -203,7 +190,6 @@ function M.open()
   vim.wo.wrap = false
   vim.wo.scrolloff = 99999
 
-  -- Disable insert on dashboard
   for _, key in ipairs({ "i", "a", "o", "O", "I", "A" }) do
     vim.keymap.set("n", key, "<nop>", { buffer = buf })
   end
@@ -213,11 +199,9 @@ function M.open()
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.bo[buf].modifiable = false
 
-  -- Draw immediately
   animate_header(buf, pad_top)
   render_menu(buf, pad_top)
 
-  -- Keymaps + highlight logic
   local ns = api.nvim_create_namespace("rnvim_dash")
   local current = 1
 
@@ -227,14 +211,7 @@ function M.open()
     if not pos then
       return
     end
-    api.nvim_buf_add_highlight(
-      buf,
-      ns,
-      "Visual",
-      pos.row,
-      pos.col_start,
-      pos.col_end
-    )
+    api.nvim_buf_add_highlight(buf, ns, "Visual", pos.row, pos.col_start, pos.col_end)
   end
 
   highlight(1)
@@ -257,12 +234,21 @@ function M.open()
   vim.keymap.set("n", "<Up>", move_up, opts)
 
   vim.keymap.set("n", "<CR>", function()
-    vim.cmd(menu[current].cmd)
+    local item = menu[current]
+    if item.action then
+      item.action()
+    elseif item.cmd then
+      vim.cmd(item.cmd)
+    end
   end, opts)
 
   for _, m in ipairs(menu) do
     vim.keymap.set("n", m.key, function()
-      vim.cmd(m.cmd)
+      if m.action then
+        m.action()
+      elseif m.cmd then
+        vim.cmd(m.cmd)
+      end
     end, opts)
   end
 end

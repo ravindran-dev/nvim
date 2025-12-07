@@ -18,6 +18,14 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     vim.cmd("mksession! ~/.local/share/nvim/session.vim")
   end
 })
+local ok, persistence = pcall(require, "persistence")
+if ok then
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+      persistence.save()
+    end,
+  })
+end
 
 
 
