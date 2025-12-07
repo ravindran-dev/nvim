@@ -263,11 +263,11 @@ Lazy.nvim will automatically install all plugins.
 
 - Dashboard message changes based on morning, afternoon, evening, or late night usage.
 
-- <leader>dd) - Jump to the dashboard immediately from anywhere in Nvim.
+- <leader>dd - Jump to the dashboard immediately from anywhere in Nvim.
 
 - Shows live CPU inside the dashboard.
 
-- Displays Neovim’s current Lua memory usage in MB.
+- Displays Neovim’s current Lua memory usage
 
 - Quick search through installed plugins directly from the dashboard menu.
 
@@ -313,7 +313,7 @@ You can reach me here:
   <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white">
 </a>
 
-<!-- GitHub -->
+
 <a href="https://github.com/ravindran-dev" target="_blank">
   <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white">
 </a>
