@@ -259,9 +259,12 @@ Lazy.nvim will automatically install all plugins.
 
 - Quick search through installed plugins directly from the dashboard menu.
 
+- Folder info in dashboard
+
 ## R NVIM UI example:
 
-<img width="1915" height="1014" alt="image" src="https://github.com/user-attachments/assets/63bd86fc-3958-4800-a52a-8936da7f02db" />
+<img width="1920" height="999" alt="image" src="https://github.com/user-attachments/assets/8e2789e5-36ec-4151-9200-8708092df066" />
+
 
 
 
