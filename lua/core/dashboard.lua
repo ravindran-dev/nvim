@@ -58,6 +58,25 @@ local function get_launch_stats()
   return string.format(" %d plugins loaded in %sms", stats.count, ms)
 end
 
+local function get_folder_info()
+  local cwd = vim.fn.getcwd()
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel 2>/dev/null")[1]
+  local root = (git_root ~= nil and git_root ~= "") and git_root or cwd
+  local name = vim.fn.fnamemodify(root, ":t")
+
+  local ok, items = pcall(vim.fn.globpath, root, "*", 0, 1)
+  local count = ok and #items or 0
+
+  local label
+  if root == cwd then
+    label = root
+  else
+    label = string.format("%s (cwd: %s)", root, cwd)
+  end
+
+  return string.format(" %s  • %d items  • %s", name, count, label)
+end
+
 local header = {
   "  ██████╗     ███╗   ██╗██╗   ██╗██╗███╗   ███╗",
   "  ██╔══██╗    ████╗  ██║██║   ██║██║████╗ ████║",
@@ -134,6 +153,9 @@ local function render_menu(buf, pad_top)
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_greeting()) })
   row = row + 2
 
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_folder_info()) })
+  row = row + 2
+
   local ok_weather, weather_mod = pcall(require, "core.weather")
   if ok_weather and weather_mod.get_weather then
     local weather = weather_mod.get_weather()
@@ -167,9 +189,11 @@ local function render_menu(buf, pad_top)
     row = row + 2
   end
 
-
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
   row = row + 2
+
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { "" }) -- <-- blank space
+  row = row + 1
 
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_clock()) })
 
