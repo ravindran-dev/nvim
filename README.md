@@ -2,7 +2,7 @@
   <img src="https://img.shields.io/badge/R%20NVIM-Custom%20Neovim%20Setup-blueviolet?style=for-the-badge" />
 </p>
 
-<h1 align="center">R NVIM — A Modern, Powerful & Animated Neovim Setup</h1>
+<h1 align="center">R NVIM - A Modern, Powerful & Animated Neovim Setup</h1>
 
 <p align="center">
 A beautifully structured, fast, and feature-rich Neovim configuration built with <b>Lua</b> and powered by <b>Lazy.nvim</b>.  
@@ -99,12 +99,12 @@ A beautifully structured, fast, and feature-rich Neovim configuration built with
 
 For Arch Linux:
 
-```bash
+```zsh
 sudo pacman -S neovim
 ```
 
 ### 2️ Install Git
-```bash
+```zsh
 sudo pacman -S git
 ```
 
@@ -177,41 +177,31 @@ Lazy.nvim will automatically install all plugins.
   
  - Catppuccin - color scheme & UI theme
   
- - Telescope - fuzzy file and text finder
+ - telescope.nvim - fuzzy file and text finder
   
- - Telescope-fzf-native - performance boost for search
+ - nvim-treesitter - advanced syntax parser
   
- - Treesitter - advanced syntax parser
-  
- - LSPConfig - language server support
+ - nvim-lspconfig - language server support
   
  - Mason - auto-installation of LSPs
   
- - Mason-LSPConfig -LSP auto-wiring
+ - mason-lspconfig - LSP auto-wiring
   
  - nvim-cmp - auto-completion engine
   
  - LuaSnip - snippet engine
   
- - cmp-nvim-lsp - LSP completion source
+ - null-ls - formatting & linting
   
- - cmp-path - path completion
+ - gitsigns - git change visualization
   
- - cmp-buffer - buffer content completion
-  
- - cmp-cmdline - command-line completion
-  
- - none-ls (null-ls) - formatting & linting
-  
- - GitSigns - git change visualization
-  
- - Git-Blame.nvim - inline git line blame
+ - git-blame.nvim - inline git line blame
   
  - Persistence.nvim - auto session restore
   
- - ToggleTerm - floating & split terminals
+ - toggleterm.nvim - floating & split terminals
   
- - Neotree / Nvim-tree - file explorer (your choice)
+ - nvim-tree - file explorer
   
  - LeetCode.nvim - solve Leetcode inside Neovim
   
@@ -224,26 +214,24 @@ Lazy.nvim will automatically install all plugins.
  - Plenary.nvim - base library for plugins
   
  - nvim-notify - stylish notifications
-  
- - indent-blankline.nvim - indentation guides
    
  - Vigemus/iron.nvim - Adds a REPL panel for Python, Node, Bash, Lua and sends code live to terminal.
 
-- MunifTanjim/nui.nvim - UI component library powering popups and advanced layout windows.
+-  MunifTanjim/nui.nvim - UI component library powering popups and advanced layout windows.
 
-- nvim-lualine/lualine.nvim - Status line plugin used for displaying breadcrumbs & system stats.
+-  nvim-lualine/lualine.nvim - Status line plugin used for displaying breadcrumbs & system stats.
 
-- nvim-tree/nvim-web-devicons - Icon pack for the dashboard, menu icons, and file types.
+-  kyazdani42/nvim-web-devicons - Icon pack for the dashboard, menu icons, and file types.
 
-- SmiteshP/nvim-navic - Provides breadcrumb navigation and an outline sidebar for code structure.
+-  SmiteshP/nvim-navic - Provides breadcrumb navigation and an outline sidebar for code structure.
   
 ## Additional Features
 
 - Live clock + date display on dashboard
 
-- Weather display (API-based real-time update)
+- Weather display
 
-- Git status overview (branch + changes count)
+- Git status overview
 
 - Launch stats showing plugin count & load time
 
@@ -255,7 +243,7 @@ Lazy.nvim will automatically install all plugins.
 
 - Responsive, highlighted dashboard menu navigation
 
-- Global VSCode-like keymaps (Copy/Paste/Undo/Redo/Select all)
+- Global VSCode-like keymaps
 
 - Line numbers & relative line numbers enabled by default
 
