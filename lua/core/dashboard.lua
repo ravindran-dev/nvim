@@ -144,9 +144,6 @@ local function render_menu(buf, pad_top)
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(git_status()) })
   row = row + 2
 
-  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
-  row = row + 2
-
   api.nvim_buf_set_lines(buf, row, row + 1, false, { center(system.get_system_stats()) })
   row = row + 2
 
@@ -170,7 +167,11 @@ local function render_menu(buf, pad_top)
     row = row + 2
   end
 
-  api.nvim_buf_set_lines(buf, row + 1, row + 2, false, { center(get_clock()) })
+
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_launch_stats()) })
+  row = row + 2
+
+  api.nvim_buf_set_lines(buf, row, row + 1, false, { center(get_clock()) })
 
   vim.bo[buf].modifiable = false
 end
@@ -254,3 +255,4 @@ function M.open()
 end
 
 return M
+
