@@ -68,3 +68,18 @@ vim.keymap.set("n", "<leader>ss", function()
   require("persistence").save()
 end, { desc = "Save Session" })
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle file tree" })
+
+
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+map("n", "<C-c>", '"+y', opts)
+map("v", "<C-c>", '"+y', opts)
+
+map("n", "<C-v>", '"+p', opts)
+map("v", "<C-v>", '"+p', opts)
+map("i", "<C-v>", '<C-r>+', opts)
+
+map({ "n", "v" }, "x", '"_x', opts)
+map("n", "X", '"_X', opts)
+map({ "n", "v" }, "<Del>", '"_x', opts)
