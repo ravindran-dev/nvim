@@ -19,12 +19,12 @@ return {
 
     mason_lspconfig.setup({
       ensure_installed = {
-        "clangd",        -- C/C++
-        "pyright",       -- Python
-        "tsserver",      -- TS/JS
-        "lua_ls",        -- Lua
-        "gopls",         -- Go
-        "rust_analyzer", -- Rust
+        "clangd",
+        "pyright",
+        "tsserver",
+        "lua_ls",
+        "gopls",
+        "rust_analyzer",
       },
       automatic_installation = true,
     })
