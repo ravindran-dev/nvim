@@ -1,4 +1,4 @@
--- lua/core/support.lua
+
 local api = vim.api
 local M = {}
 
@@ -6,41 +6,44 @@ local shortcuts = {
   { "R NVIM — Support / Shortcuts" },
   { "" },
   { "General" },
-  { "  <leader>ff", "Telescope: Find files" },
-  { "  <leader>fg", "Telescope: Live grep" },
-  { "  <leader>fb", "Telescope: Buffers" },
-  { "  <leader>fh", "Telescope: Help tags" },
-  { "  <leader>e",  "Toggle file tree (NvimTree)" },
+  { "  <leader>ff", "Find files" },
+  { "  <leader>fg", "Live grep" },
+  { "  <leader>fb", "List buffers" },
+  { "  <leader>fh", "Help tags" },
+  { "  <leader>e",  "Toggle file tree" },
   { "  <leader>dd", "Open R NVIM dashboard" },
   { "" },
   { "Editing" },
-  { "  <C-c>", "Copy (system clipboard)" },
-  { "  <C-v>", "Paste (system clipboard)" },
-  { "  x / <Del>", "Delete without yanking (black-hole)" },
+  { "  <C-c>", "Copy to clipboard" },
+  { "  <C-v>", "Paste from clipboard" },
+  { "  x / <Del>", "Delete without yanking" },
   { "" },
-  { "Session / Projects" },
-  { "  <leader>ss", "Save session (persistence.nvim)" },
-  { "  <leader>dd -> s", "Open Last Session from dashboard" },
+  { "Sessions" },
+  { "  <leader>ss", "Save session" },
+  { "  Dashboard → s", "Open last session" },
   { "" },
-  { "REPL & Tools" },
-  { "  <leader>ir", "Open REPL for current filetype (iron.nvim)" },
+  { "REPL (iron.nvim)" },
+  { "  <leader>ir", "Open REPL" },
   { "  <leader>sl", "Send line to REPL" },
+  { "  <leader>sc", "Send selection to REPL" },
+  { "" },
+  { "Markdown" },
   { "  <leader>mp", "Markdown preview (Glow)" },
   { "" },
   { "LeetCode" },
-  { "  <leader>lc", "Open LeetCode UI" },
-  { "  <leader>ld", "Daily LeetCode" },
+  { "  <leader>lc", "Open LeetCode" },
+  { "  <leader>ld", "Daily challenge" },
   { "  <leader>ll", "List problems" },
   { "" },
-  { "Dashboard / Navigation" },
-  { "  j / k / <Down> / <Up>", "Move selection in dashboard" },
-  { "  <CR>", "Activate selected menu item" },
+  { "Dashboard Navigation" },
+  { "  j / k", "Move selection" },
+  { "  <CR>", "Activate selected" },
   { "" },
-  { "Window Management" },
+  { "Window Navigation" },
   { "  <C-h> <C-j> <C-k> <C-l>", "Move between splits" },
   { "" },
-  { "Close popup" },
-  { "  q  <Esc>  <leader>?", "Close this window" },
+  { "Close Popup" },
+  { "  q / <Esc> / <leader>?", "Close support window" },
 }
 
 local function make_lines()
@@ -49,11 +52,7 @@ local function make_lines()
     if #r == 1 then
       table.insert(lines, r[1])
     else
-      -- pad right side so second column lines align
-      local left = r[1]
-      local right = r[2] or ""
-      local sep = "    "
-      table.insert(lines, string.format("%-18s%s%s", left, sep, right))
+      table.insert(lines, string.format("%-18s    %s", r[1], r[2]))
     end
   end
   return lines
@@ -68,32 +67,29 @@ function M.open()
   local lines = make_lines()
   local width = 0
   for _, l in ipairs(lines) do
-    local len = vim.fn.strdisplaywidth(l)
-    if len > width then width = len end
+    width = math.max(width, vim.fn.strdisplaywidth(l))
   end
-  local height = #lines
 
+  local height = #lines
   local buf = api.nvim_create_buf(false, true)
+
+  api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   api.nvim_buf_set_option(buf, "buftype", "nofile")
   api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-  api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
   local win_width = vim.o.columns
   local win_height = vim.o.lines
 
-  local win_w = math.min(width + 6, math.floor(win_width * 0.8))
-  local win_h = math.min(height + 4, math.floor(win_height * 0.8))
-
-  local row = math.floor((win_height - win_h) / 2)
-  local col = math.floor((win_width - win_w) / 2)
+  local w = math.min(width + 6, math.floor(win_width * 0.8))
+  local h = math.min(height + 4, math.floor(win_height * 0.8))
 
   local opts = {
     style = "minimal",
     relative = "editor",
-    width = win_w,
-    height = win_h,
-    row = row,
-    col = col,
+    width = w,
+    height = h,
+    row = math.floor((win_height - h) / 2),
+    col = math.floor((win_width - w) / 2),
     border = "rounded",
   }
 
@@ -101,11 +97,9 @@ function M.open()
   M.win = win
   M.buf = buf
 
-  -- highlights
   api.nvim_buf_add_highlight(buf, -1, "Title", 0, 0, -1)
 
-  -- keymaps to close
-  local close = function()
+  local function close()
     if api.nvim_win_is_valid(win) then
       api.nvim_win_close(win, true)
       M.win = nil
@@ -115,14 +109,10 @@ function M.open()
 
   api.nvim_buf_set_keymap(buf, "n", "q", "", { noremap = true, callback = close })
   api.nvim_buf_set_keymap(buf, "n", "<Esc>", "", { noremap = true, callback = close })
-  -- toggle with same leader mapping
   api.nvim_buf_set_keymap(buf, "n", "<leader>?", "", { noremap = true, callback = close })
 
-  -- keep cursor at top-left
-  api.nvim_win_set_cursor(win, {1,0})
-  -- make buffer readonly
+  api.nvim_win_set_cursor(win, { 1, 0 })
   api.nvim_buf_set_option(buf, "modifiable", false)
 end
 
 return M
-
