@@ -110,7 +110,7 @@ sudo pacman -S git
 
 ### 3️ Install Nerd Font
 ```zsh
-yay -S nerd-fonts-complete
+sudo pacman -S nerd-fonts
 ```
 ### 4️ Clone the R NVIM config
 ```zsh
