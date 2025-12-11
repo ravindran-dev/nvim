@@ -27,6 +27,7 @@ if ok then
   })
 end
 
+vim.opt.clipboard:append("unnamedplus")
 
 
 vim.opt.shortmess:append("I")
