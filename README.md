@@ -125,6 +125,7 @@ Lazy.nvim will automatically install all plugins.
 ## Folder Structure
 ```yaml
 ~/.config/nvim
+├── Session.vim
 ├── init.lua
 ├── LICENSE
 ├── README.md
@@ -139,7 +140,11 @@ Lazy.nvim will automatically install all plugins.
 │   │   ├── leetcode_cookie.lua   
 │   │   ├── leetcode_browser.lua    
 │   │   ├── autocomds.lua           
-│   │   ├── configs.lua             
+│   │   ├── configs.lua
+|   |   ├── support.lua
+|   |   ├── plugin_search.lua
+|   |   ├── tree.lua
+|   |   ├── system.lua       
 │   ├── scripts
 │   │   ├── get_leetcode_cookie.py  
 │   ├── utils.lua                   
@@ -154,7 +159,7 @@ Lazy.nvim will automatically install all plugins.
 │       ├── persistence.lua         
 │       ├── ui.lua                 
 │       ├── leetcode.lua            
-
+│       ├── iron.lua
 ```
 
 ## Keymaps (Important)
@@ -169,7 +174,8 @@ Lazy.nvim will automatically install all plugins.
 - Space + e	Toggle Explorer
 - Space + t	Open Terminal
 - Space + l	Lazy Menu
-- q	Quit Dashboard
+- q	        Quit Dashboard
+- Space + ? Support popup
 
 ## Plugins Used
 
@@ -260,6 +266,8 @@ Lazy.nvim will automatically install all plugins.
 - Quick search through installed plugins directly from the dashboard menu.
 
 - Folder info in dashboard
+
+- Support popup which lists all the shortcuts to use the R NVIM (<leader> + ?)
 
 ## R NVIM UI example:
 
