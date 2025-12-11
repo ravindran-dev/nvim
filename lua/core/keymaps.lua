@@ -69,4 +69,7 @@ map({ "n", "v" }, "<Del>", '"_x', opts)
 
 
 map("n", "<leader>mp", "<cmd>Glow<CR>", opts)
+vim.keymap.set("n", "<leader>?", function()
+  require("core.support").open()
+end, { noremap = true, silent = true, desc = "R NVIM: Support / Shortcuts" })
 
