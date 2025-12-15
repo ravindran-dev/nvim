@@ -208,13 +208,14 @@ function M.open()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
 
+
+
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
   vim.wo.cursorline = false
   vim.wo.wrap = false
   vim.wo.scrolloff = 99999
-
   for _, key in ipairs({ "i", "a", "o", "O", "I", "A" }) do
     vim.keymap.set("n", key, "<nop>", { buffer = buf })
   end

@@ -17,3 +17,20 @@ end,
 api.nvim_create_autocmd('TextYankPost', {
 callback = function() vim.highlight.on_yank({ timeout = 200 }) end,
 })
+
+
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  callback = function()
+    local ft = vim.bo.filetype
+    local bt = vim.bo.buftype
+
+    -- Skip dashboard, help, nofile, terminal, floating windows
+    if bt ~= "" or ft == "dashboard" or ft == "help" then
+      return
+    end
+
+    vim.wo.number = true
+    vim.wo.relativenumber = false
+  end,
+})
+
