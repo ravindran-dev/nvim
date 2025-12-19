@@ -84,6 +84,11 @@ require("lazy").setup({
       })
     end,
   },
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
 
   -- LeetCode
   {

@@ -69,7 +69,22 @@ map({ "n", "v" }, "<Del>", '"_x', opts)
 
 
 map("n", "<leader>mp", "<cmd>Glow<CR>", opts)
-vim.keymap.set("n", "<leader>?", function()
+
+map("n", "<leader>?", function()
   require("core.support").open()
 end, { noremap = true, silent = true, desc = "R NVIM: Support / Shortcuts" })
 
+map("n", "<leader>sr", function()
+  require("core.search").open_find_replace()
+end, { desc = "Find & Replace (Scoped)" })
+
+
+
+map("n", "<leader>sw", function()
+  require("spectre").open_visual({ select_word = true })
+end, { desc = "Replace word under cursor" })
+
+map("v", "<leader>sw", function()
+  require("spectre").open_visual()
+end, { desc = "Replace selection" })
+ 
