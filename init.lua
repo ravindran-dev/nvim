@@ -4,6 +4,8 @@ require("core.autocmds")
 require("core.lazy")
 require("core.dashboard")
 require("core.search")
+require("core.theme")
+
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     if vim.fn.argc() == 0 then
@@ -77,3 +79,9 @@ vim.keymap.set("n", "<C-y>", "<C-r>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-y>", function()
   vim.cmd("normal! <C-r>")
 end, { noremap = true, silent = true })
+
+
+
+
+
+

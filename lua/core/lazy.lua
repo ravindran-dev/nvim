@@ -28,7 +28,7 @@ require("lazy").setup({
         flavour = "mocha",
         transparent_background = false,
       })
-      vim.cmd("colorscheme catppuccin")
+      -- vim.cmd("colorscheme catppuccin")
     end,
   },
 
@@ -154,6 +154,11 @@ require("lazy").setup({
     config = function()
       require("plugins.lsp")
     end,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
   },
 
   -- Completion

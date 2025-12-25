@@ -1,6 +1,14 @@
 local api = vim.api
 local M = {}
 local system = require("core.system")
+vim.api.nvim_set_hl(0, "DashboardHeader", {
+  fg = "#7aa2f7",
+  bold = true,
+})
+
+vim.api.nvim_set_hl(0, "DashboardMenu", {
+  fg = "#bb9af7",
+})
 
 local function open_last_session()
   local ok, persistence = pcall(require, "persistence")
