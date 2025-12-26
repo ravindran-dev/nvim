@@ -53,13 +53,13 @@ nvimtree.setup({
 
   git = {
     enable = true,
-    ignore = false, -- 🔥 IMPORTANT: show gitignored files
+    ignore = false, 
     show_on_dirs = true,
     show_on_open_dirs = true,
   },
 
   filters = {
-    dotfiles = false, -- 🔥 IMPORTANT: show dotfiles
+    dotfiles = false, 
     git_clean = false,
     no_buffer = false,
     custom = {},

@@ -3,7 +3,13 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 
-map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
+vim.keymap.set("n", "<leader>ff", function()
+  require("telescope.builtin").find_files({
+    hidden = true,
+    no_ignore = true,
+  })
+end, { noremap = true, silent = true, desc = "Find files (incl hidden)" })
+
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)

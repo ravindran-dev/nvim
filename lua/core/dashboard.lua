@@ -9,6 +9,12 @@ vim.api.nvim_set_hl(0, "DashboardHeader", {
 vim.api.nvim_set_hl(0, "DashboardMenu", {
   fg = "#bb9af7",
 })
+local function dashboard_find_files()
+  require("telescope.builtin").find_files({
+    hidden = true,
+    no_ignore = true,
+  })
+end
 
 local function open_last_session()
   local ok, persistence = pcall(require, "persistence")
@@ -95,7 +101,7 @@ local header = {
 }
 
 local menu = {
-  { icon = "",  text = "Find File",         key = "f", cmd = "Telescope find_files" },
+  { icon = "",  text = "Find File",         key = "f", action = dashboard_find_files},
   { icon = "",  text = "New File",          key = "n", cmd = "enew" },
   { icon = "",  text = "Recent Files",      key = "r", cmd = "Telescope oldfiles" },
   { icon = "",  text = "Find Text",         key = "g", cmd = "Telescope live_grep" },
