@@ -34,3 +34,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#111111" })
+  end,
+})
+
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function()
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0a0a0a" })
+  end,
+})

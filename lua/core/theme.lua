@@ -34,3 +34,17 @@ require("tokyonight").setup({
 })
 
 vim.cmd("colorscheme tokyonight")
+-- Neon cursor highlight
+vim.api.nvim_set_hl(0, "Cursor", {
+  fg = "#000000",
+  bg = "#00ffff", -- neon cyan
+})
+
+vim.api.nvim_set_hl(0, "CursorLine", {
+  bg = "#0a0a0a", -- subtle glow band
+})
+
+vim.api.nvim_set_hl(0, "CursorLineNr", {
+  fg = "#00ffff",
+  bold = true,
+})

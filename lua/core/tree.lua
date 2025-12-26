@@ -1,11 +1,10 @@
--- lua/core/tree.lua
-
 local ok, nvimtree = pcall(require, "nvim-tree")
 if not ok then
   return
 end
 
 nvimtree.setup({
+
   sync_root_with_cwd = true,
   respect_buf_cwd = true,
 
@@ -14,12 +13,22 @@ nvimtree.setup({
     update_root = true,
   },
 
+  view = {
+    width = 32,
+    side = "left",
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes",
+  },
+
   renderer = {
-    highlight_git = true,
     root_folder_label = false,
+    highlight_git = true,
+
     indent_markers = {
       enable = true,
     },
+
     icons = {
       show = {
         file = true,
@@ -27,15 +36,16 @@ nvimtree.setup({
         folder_arrow = true,
         git = true,
       },
+
       glyphs = {
         git = {
-          unstaged = "●",   -- modified but not staged
-          staged   = "",   -- staged
-          unmerged = "",
-          renamed  = "",
-          untracked = "★",  -- new file
-          deleted  = "",
-          ignored  = "◌",
+          unstaged  = "●",
+          staged    = "",
+          unmerged  = "",
+          renamed   = "",
+          untracked = "★",
+          deleted   = "",
+          ignored   = "◌",
         },
       },
     },
@@ -43,9 +53,16 @@ nvimtree.setup({
 
   git = {
     enable = true,
-    ignore = false,
+    ignore = false, -- 🔥 IMPORTANT: show gitignored files
     show_on_dirs = true,
     show_on_open_dirs = true,
+  },
+
+  filters = {
+    dotfiles = false, -- 🔥 IMPORTANT: show dotfiles
+    git_clean = false,
+    no_buffer = false,
+    custom = {},
   },
 
   diagnostics = {
@@ -53,8 +70,13 @@ nvimtree.setup({
     show_on_dirs = true,
   },
 
-  view = {
-    width = 32,
-    side = "left",
+  actions = {
+    open_file = {
+      quit_on_open = false,
+    },
+  },
+
+  filesystem_watchers = {
+    enable = true,
   },
 })
