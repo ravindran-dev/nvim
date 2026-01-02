@@ -9,13 +9,15 @@ vim.api.nvim_set_hl(0, "DashboardHeader", {
 vim.api.nvim_set_hl(0, "DashboardMenu", {
   fg = "#bb9af7",
 })
+
 local function dashboard_find_files()
   require("telescope.builtin").find_files({
     hidden = true,
-    no_ignore = true,
+    file_ignore_patterns = {
+      "^.git/",
+    },
   })
 end
-
 local function open_last_session()
   local ok, persistence = pcall(require, "persistence")
   if not ok then

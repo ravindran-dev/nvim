@@ -3,13 +3,13 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 
+
 vim.keymap.set("n", "<leader>ff", function()
   require("telescope.builtin").find_files({
     hidden = true,
-    no_ignore = true,
+    file_ignore_patterns = { "^.git/" },
   })
-end, { noremap = true, silent = true, desc = "Find files (incl hidden)" })
-
+end, { desc = "Find files (no .git)" })
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
@@ -93,4 +93,4 @@ end, { desc = "Replace word under cursor" })
 map("v", "<leader>sw", function()
   require("spectre").open_visual()
 end, { desc = "Replace selection" })
- 
+
