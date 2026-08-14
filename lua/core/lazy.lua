@@ -49,7 +49,8 @@ require("lazy").setup({
   -- Images in terminal
   {
     "3rd/image.nvim",
-    lazy = false,
+    lazy = true,
+    event = "VeryLazy",
     config = function()
       require("image").setup({
         backend = "kitty",
@@ -203,10 +204,10 @@ require("lazy").setup({
 
   -- Formatting / linting bridge
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("plugins.null-ls")
+      require("plugins.none-ls")
     end,
   },
 
@@ -232,6 +233,9 @@ require("lazy").setup({
   { "simrat39/rust-tools.nvim", ft = { "rust" }, lazy = true },
 
 }, {
+  rocks = {
+    enabled = false,
+  },
   ui = {
     border = "rounded",
   },

@@ -153,7 +153,7 @@ Lazy.nvim will automatically install all plugins.
 │       ├── cmp.lua                 
 │       ├── telescope.lua           
 │       ├── treesitter.lua          
-│       ├── null-ls.lua             
+│       ├── none-ls.lua             
 │       ├── git.lua                 
 │       ├── git-blame.lua          
 │       ├── persistence.lua         
@@ -197,7 +197,7 @@ Lazy.nvim will automatically install all plugins.
   
  - LuaSnip - snippet engine
   
- - null-ls - formatting & linting
+ - none-ls - formatting & linting
   
  - gitsigns - git change visualization
   
